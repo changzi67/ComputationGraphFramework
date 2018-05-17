@@ -5,13 +5,14 @@
 template<typename T>
 class Constant : public BaseNode<T>
 {
+	using BaseNode<T>::value;
 public:
 	Constant(){}
 	Constant(T _value){
-		this->value = _value;
+		value = _value;
 	}
 	virtual T eval(){
-		return this->value;
+		return value;
 	}
 	virtual ~Constant(){}
 };
