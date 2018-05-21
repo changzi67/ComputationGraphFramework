@@ -7,11 +7,12 @@ using std::string;
 
 template<typename T>
 class Print : public UniaryOp<T> 
-{
+{	
 	string name;
 	static unsigned count;
 public:
-	Print(const string& _name = "");
+	Print(BaseNode<T>& _child, const string& _name = "");
+	Print(BaseNode<T>* _child, const string& _name = "");
 	virtual ~Print(){}
 	virtual T eval();
 	string getName();
@@ -26,9 +27,21 @@ unsigned Print<T>::count = 0;
 using std::string;
 
 template<typename T>
-Print<T>::Print(const string& _name){
+Print<T>::Print(BaseNode<T>& _child, const string& _name):name(_name){
+	Print<T>::child=& _child;
 	Print<T>::count++;
-	if(_name=""){
+	if(_name==""){
+		std::stringstream ss;
+		ss<<count;
+		name = string("Printer ")+ss.str();
+	}
+}
+
+template<typename T>
+Print<T>::Print(BaseNode<T>* _child, const string& _name):name(_name){
+	Print<T>::child = _child;
+	Print<T>::count++;
+	if(_name==""){
 		std::stringstream ss;
 		ss<<count;
 		_name = string("Printer ")+ss.str();

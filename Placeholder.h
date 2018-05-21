@@ -1,7 +1,7 @@
 #pragma once
 #include "BaseNode.h"
 #include <string>
-
+#include <iostream>
 using std::string;
 
 

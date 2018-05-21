@@ -13,6 +13,6 @@ public:
 	UniaryOp(BaseNode<T>* _child):child(_child){}
 	UniaryOp(const BaseNode<T>& _child):child(&_child){}
 	virtual T eval()=0;
-	~UniaryOp()=0;
+	~UniaryOp(){}
 	
 };

@@ -59,8 +59,10 @@ T BaseNode<T>::eval(const std::initializer_list<std::pair<Placeholder<T>&,const 
 	for(auto it = vars.begin();it!=vars.end();++it){
 		if(!((it->first).isAssigned()))
 			it->first = it->second;
-		else std::cout<<"Error: Placeholder "<<(it->first).getName()<<" appeared more than once!";
-		return T();
+		else{
+			std::cout<<"Error: Placeholder "<<(it->first).getName()<<" appeared more than once!"<<std::endl;
+			return T();
+		}
 	}
 	try{
 		T ans = eval();

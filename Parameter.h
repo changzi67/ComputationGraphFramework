@@ -5,8 +5,8 @@ template <typename T>
 class Parameter: public BaseNode<T>
 {
 public:
-	Parameter(){}
-	Parameter(const T& data):Parameter::value(data){}
+	Parameter() = delete;
+	Parameter(const T& data);
 	virtual T eval();
 	void set(const T& data);
 	void add(const T& data);
@@ -15,6 +15,11 @@ public:
 	void divide(const T& data);
 	~Parameter(){}
 };
+
+template<typename T>
+Parameter<T>::Parameter(const T& data){
+	Parameter<T>::value = data;
+}
 
 template<typename T>
 T Parameter<T>::eval(){
