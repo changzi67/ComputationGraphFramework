@@ -69,12 +69,19 @@ T BaseNode<T>::eval(const std::vector<std::pair<Placeholder<T>&, T>> vars){
 			return T();
 		}
 	}
-	T ans = eval();
-	for(auto it = vars.begin();it!=vars.end();++it){
-		(it->first).setAssigned(false);
-	}
-	return ans;
+	try{
+		T ans = eval();
+		for(auto it = vars.begin();it!=vars.end();++it){
+			(it->first).setAssigned(false);
+		}
 	
+		return ans;
+	
+	}
+	catch (const string &s){
+		std::cout<<"Error: Placeholder "<<s<<" not found!"<<std::endl;
+	}
+
 }
 
 template<typename T>

@@ -45,7 +45,7 @@ T Placeholder<T>::eval(){
 		Placeholder<T>::timeStamp=ComputationGraph::currentTime;
 		return Placeholder<T>::value;
 	}
-	else std::cout<<"Placeholder "<<getName()<<" not found!"<<std::endl;
+	else throw name;
 	//the return value will be meaningless.
 }
 
