@@ -4,7 +4,6 @@
 #include "Placeholder.h"
 #include "Print.h"
 
-
 int main(int argc, char const *argv[])
 {
 	auto x = Placeholder<float>("x");

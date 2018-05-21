@@ -17,10 +17,10 @@ public:
 
 template <typename T>
 T Divide<T>::eval(){
-	if(this->evaled)
+	if(this->getTime()>=ComputationGraph::currentTime)
 		return this->value;
-	T ans = (this->left->eval())/(this->right->eval());
+	T ans = this->left->eval()/(this->right->eval());
 	this->value = ans;
-	this->evaled = true;
+	this->timeStamp = ComputationGraph::currentTime;
 	return ans;
 }

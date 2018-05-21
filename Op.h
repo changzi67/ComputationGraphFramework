@@ -4,10 +4,8 @@
 template<typename T>
 class Op: public BaseNode<T>
 {
-protected:
-	bool evaled;
 public:
-	Op():evaled(false){}
+	Op(){}
 	virtual T eval()= 0;
 	virtual ~Op(){};
 };

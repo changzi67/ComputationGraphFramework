@@ -1,6 +1,5 @@
 #pragma once
 #include "BinaryOp.h"
-
 template <typename T>
 class Add: public BinaryOp<T>
 {
@@ -16,10 +15,10 @@ public:
 
 template <typename T>
 T Add<T>::eval(){
-	if(this->evaled)
+	if(this->getTime()>=ComputationGraph::currentTime)
 		return this->value;
-	T ans = (this->left->eval())+(this->right->eval());
+	T ans = this->left->eval()+(this->right->eval());
 	this->value = ans;
-	this->evaled = true;
+	this->timeStamp = ComputationGraph::currentTime;
 	return ans;
 }

@@ -50,11 +50,11 @@ Print<T>::Print(BaseNode<T>* _child, const string& _name):name(_name){
 
 template<typename T>
 T Print<T>::eval(){
-	if(this->evaled)return this->value;
+	if(this->getTime()>=ComputationGraph::currentTime)return this->value;
 	T ans = this->child->eval();
 	std::cout<<"Print Operator : "<<name<<" = "<<ans<<std::endl;
 	this->value = ans;
-	this->evaled = true;
+	this->timeStamp = ComputationGraph::currentTime;
 	return ans;
 }
 

@@ -1,6 +1,10 @@
 #pragma once
-#include <initializer_list>
+#include <vector>
 #include <tuple>
+
+namespace ComputationGraph{
+	unsigned long long currentTime = 0;
+}
 
 template<typename T>
 class Op;
@@ -28,12 +32,13 @@ class BaseNode
 {
 protected:
 	T value;
+	unsigned long long timeStamp;
 public:
-	BaseNode(){}
+	BaseNode():timeStamp(ComputationGraph::currentTime-1){}
 	virtual ~BaseNode(){};
-	T eval(const std::initializer_list<std::pair<Placeholder<T>&,const T&>>);
+	T eval(const std::vector<std::pair<Placeholder<T>&,T>>);
 	virtual T eval()= 0;
-	
+	unsigned long long getTime(){return timeStamp;}
 	Add<T>& operator + (BaseNode<T>& b);
 	Sub<T>& operator - (BaseNode<T>& b);
 	Multiply<T>& operator * (BaseNode<T>& b);
@@ -47,33 +52,28 @@ public:
 #include "Multiply.h"
 #include "Divide.h"
 
-#include <initializer_list>
 #include <string>
 #include <iostream>
 #include <tuple>
 
 
-//using initializer list to support something like t.eval({{x,1},{y,2}});
+//to support something like t.eval({{x,1},{y,2}});
 template<typename T>
-T BaseNode<T>::eval(const std::initializer_list<std::pair<Placeholder<T>&,const T&>> vars){
+T BaseNode<T>::eval(const std::vector<std::pair<Placeholder<T>&, T>> vars){
 	for(auto it = vars.begin();it!=vars.end();++it){
-		if(!((it->first).isAssigned()))
+		if(!((it->first).isAssigned())){
 			it->first = it->second;
+		}
 		else{
 			std::cout<<"Error: Placeholder "<<(it->first).getName()<<" appeared more than once!"<<std::endl;
 			return T();
 		}
 	}
-	try{
-		T ans = eval();
-		for(auto it = vars.begin();it!=vars.end();++it){
-			(it->first).setAssigned(false);
-		}
-		return ans;
+	T ans = eval();
+	for(auto it = vars.begin();it!=vars.end();++it){
+		(it->first).setAssigned(false);
 	}
-	catch(const std::string & s){
-		std::cout<<"Error: Placeholder "<<s<<"not found!"<<std::endl;
-	}
+	return ans;
 	
 }
 

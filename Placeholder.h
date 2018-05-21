@@ -41,9 +41,12 @@ Placeholder<T>::Placeholder(const string & _name):name(_name),assigned(false){
 
 template <typename T>
 T Placeholder<T>::eval(){
-	if(assigned)
-		return this->value; //value may be undefined because of specializing
-	else throw(name);
+	if(assigned){
+		Placeholder<T>::timeStamp=ComputationGraph::currentTime;
+		return Placeholder<T>::value;
+	}
+	else std::cout<<"Placeholder "<<getName()<<" not found!"<<std::endl;
+	//the return value will be meaningless.
 }
 
 template<typename T>
@@ -53,6 +56,7 @@ void Placeholder<T>::setAssigned(bool status){
 
 template<typename T>
 const Placeholder<T>& Placeholder<T>::operator = (const T& data){
+	Placeholder<T>::timeStamp = ComputationGraph::currentTime++;
 	this->value = data;
 	setAssigned(true);
 	return *this;
