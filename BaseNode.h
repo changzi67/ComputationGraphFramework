@@ -2,10 +2,6 @@
 #include <vector>
 #include <tuple>
 
-namespace ComputationGraph{
-	unsigned long long currentTime = 0;
-}
-
 template<typename T>
 class Op;
 
@@ -34,7 +30,8 @@ protected:
 	T value;
 	unsigned long long timeStamp;
 public:
-	BaseNode():timeStamp(ComputationGraph::currentTime-1){}
+	static unsigned long long currentTime;
+	BaseNode():timeStamp(BaseNode<T>::currentTime-1){}
 	virtual ~BaseNode(){};
 	T eval(const std::vector<std::pair<Placeholder<T>&,T>>);
 	virtual T eval()= 0;
@@ -56,6 +53,8 @@ public:
 #include <iostream>
 #include <tuple>
 
+template<typename T>
+unsigned long long BaseNode<T>::currentTime = 0;
 
 //to support something like t.eval({{x,1},{y,2}});
 template<typename T>

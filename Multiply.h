@@ -16,10 +16,10 @@ public:
 
 template <typename T>
 T Multiply<T>::eval(){
-	if(this->getTime()>=ComputationGraph::currentTime)
+	if(this->getTime()>=BaseNode<T>::currentTime)
 		return this->value;
 	T ans = this->left->eval()*(this->right->eval());
 	this->value = ans;
-	this->timeStamp = ComputationGraph::currentTime;
+	this->timeStamp = BaseNode<T>::currentTime;
 	return ans;
 }

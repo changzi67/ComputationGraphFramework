@@ -18,7 +18,7 @@ public:
 
 template<typename T>
 Parameter<T>::Parameter(const T& data){
-	Parameter::timeStamp = ComputationGraph::currentTime++;
+	Parameter::timeStamp = BaseNode<T>::currentTime++;
 	Parameter<T>::value = data;
 }
 
@@ -29,30 +29,30 @@ T Parameter<T>::eval(){
 
 template<typename T>
 void Parameter<T>::set(const T& data){
-	Parameter<T>::timeStamp = ComputationGraph::currentTime++;
+	Parameter<T>::timeStamp = BaseNode<T>::currentTime++;
 	this->value = data;
 }
 
 template<typename T>
 void Parameter<T>::add(const T& data){
-	Parameter<T>::timeStamp = ComputationGraph::currentTime++;
+	Parameter<T>::timeStamp = BaseNode<T>::currentTime++;
 	this->value =this->value + data;
 }
 
 template<typename T>
 void Parameter<T>::minus(const T& data){
-	Parameter<T>::timeStamp = ComputationGraph::currentTime++;
+	Parameter<T>::timeStamp = BaseNode<T>::currentTime++;
 	this->value = this->value - data;
 }
 
 template<typename T>
 void Parameter<T>::multiply(const T& data){
-	Parameter<T>::timeStamp = ComputationGraph::currentTime++;
+	Parameter<T>::timeStamp = BaseNode<T>::currentTime++;
 	this->value = this->value * data;
 }
 
 template<typename T>
 void Parameter<T>::divide(const T& data){
-	Parameter<T>::timeStamp = ComputationGraph::currentTime++;
+	Parameter<T>::timeStamp = BaseNode<T>::currentTime++;
 	this->value = this->value / data;
 }
