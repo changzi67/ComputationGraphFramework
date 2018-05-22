@@ -17,10 +17,11 @@ public:
 
 template <typename T>
 T Divide<T>::eval(){
-	if(this->getTime()>=BaseNode<T>::currentTime)
+	if(this->evaled)
 		return this->value;
+	BaseNode<T>::ops.insert(this);
 	T ans = this->left->eval()/(this->right->eval());
 	this->value = ans;
-	this->timeStamp = BaseNode<T>::currentTime;
+	this->evaled = true;
 	return ans;
 }

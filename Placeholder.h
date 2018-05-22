@@ -42,7 +42,6 @@ Placeholder<T>::Placeholder(const string & _name):name(_name),assigned(false){
 template <typename T>
 T Placeholder<T>::eval(){
 	if(assigned){
-		Placeholder<T>::timeStamp=BaseNode<T>::currentTime;
 		return Placeholder<T>::value;
 	}
 	else throw name;
@@ -56,7 +55,6 @@ void Placeholder<T>::setAssigned(bool status){
 
 template<typename T>
 const Placeholder<T>& Placeholder<T>::operator = (const T& data){
-	Placeholder<T>::timeStamp = BaseNode<T>::currentTime++;
 	this->value = data;
 	setAssigned(true);
 	return *this;

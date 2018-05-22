@@ -1,11 +1,15 @@
 #pragma once
 #include "BaseNode.h"
-
 template<typename T>
 class Op: public BaseNode<T>
 {
+protected:
+	bool evaled;
 public:
-	Op(){}
+	Op():evaled(false){}
 	virtual T eval()= 0;
 	virtual ~Op(){};
+	void clear(){
+		evaled=false;
+	}
 };
