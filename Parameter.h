@@ -18,7 +18,7 @@ public:
 
 template<typename T>
 Parameter<T>::Parameter(const T& data){
-	Parameter::timeStamp = BaseNode<T>::currentTime++;
+	Parameter<T>::timeStamp = BaseNode<T>::currentTime++;
 	Parameter<T>::value = data;
 }
 
