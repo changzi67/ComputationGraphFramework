@@ -28,14 +28,14 @@ class BaseNode
 {
 protected:
 	T value;
-	unsigned long long timeStamp;
+	long long timeStamp;
 public:
-	static unsigned long long currentTime;
+	static long long currentTime;
 	BaseNode():timeStamp(BaseNode<T>::currentTime-1){}
 	virtual ~BaseNode(){};
 	T eval(const std::vector<std::pair<Placeholder<T>&,T>>);
 	virtual T eval()= 0;
-	unsigned long long getTime(){return timeStamp;}
+	long long getTime(){return timeStamp;}
 	Add<T>& operator + (BaseNode<T>& b);
 	Sub<T>& operator - (BaseNode<T>& b);
 	Multiply<T>& operator * (BaseNode<T>& b);
@@ -54,7 +54,7 @@ public:
 #include <tuple>
 
 template<typename T>
-unsigned long long BaseNode<T>::currentTime = 0;
+long long BaseNode<T>::currentTime = 0;
 
 //to support something like t.eval({{x,1},{y,2}});
 template<typename T>
