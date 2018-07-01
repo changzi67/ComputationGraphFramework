@@ -1,76 +1,34 @@
-#pragma once
-#include "BaseNode.h"
-#include <string>
-#include <iostream>
-using std::string;
+#ifndef PLACEHOLDER
+#include "Node.h"
+#define PLACEHOLDER
 
-
-template <typename T>
-class Placeholder :public BaseNode<T>
+class Placeholder:public Node
 {
-	bool assigned;
-	string name;
-	static int count;
+private:
+	int n,m;
+	bool ismat;
+	Tensor eval(std::map<std::string,Tensor>&, Session& sess);
+	
+	void Release()
+	{
+		if(value!=nullptr)
+		{
+			delete value;
+			value=nullptr;
+		}
+	}
 public:
-	Placeholder(const string& _name="");
-	virtual T eval();
-	virtual ~Placeholder(){}
-	void setAssigned(bool status);
-	bool isAssigned();
-	const Placeholder& operator =(const T& data);
-	string getName();
-	void setName(const string &);
+	virtual void grad(std::map<Node*, std::multiset<Node*>>&, Node&) override {}
+	Placeholder(const std::string& _nm):Node(_nm),n(0),m(0),ismat(false){}
+	Placeholder(const int& _n,const int& _m,const std::string& _nm):Node(_nm),n(_n),m(_m),ismat(true){}
+	void Rely(std::set<std::string>& lib);
+	std::string Expr(){return name;}
+	std::string PrintType()const;
+	void grad (Node * Graded) {}
+	
+
+//	using Node::Eval;
 };
 
-template<typename T>
-int Placeholder<T>::count = 0;
 
-#include <string>
-#include <sstream>
-using std::string;
-
-template <typename T>
-Placeholder<T>::Placeholder(const string & _name):name(_name),assigned(false){
-	count++;
-	if(name==""){
-		std::stringstream ss;
-		ss<<count;
-		name = string("Placeholder ")+ss.str();
-	}
-}
-
-template <typename T>
-T Placeholder<T>::eval(){
-	if(assigned){
-		return Placeholder<T>::value;
-	}
-	else throw name;
-	//the return value will be meaningless.
-}
-
-template<typename T>
-void Placeholder<T>::setAssigned(bool status){
-	assigned = status;
-}
-
-template<typename T>
-const Placeholder<T>& Placeholder<T>::operator = (const T& data){
-	this->value = data;
-	setAssigned(true);
-	return *this;
-} 
-
-template<typename T>
-string Placeholder<T>::getName(){
-	return name;
-}
-
-template<typename T>
-void Placeholder<T>::setName(const string & _name){
-	name = _name;
-}
-
-template<typename T>
-bool Placeholder<T>::isAssigned(){
-	return assigned;
-}
+#endif

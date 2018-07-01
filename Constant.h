@@ -1,18 +1,23 @@
-#pragma once
+#ifndef CONSTANT
+#define CONSTANT
 
-#include "BaseNode.h"
+#include "Node.h"
 
-template<typename T>
-class Constant : public BaseNode<T>
+class Constant:public Node
 {
-	using BaseNode<T>::value;
+private:
+	Tensor eval(std::map<std::string,Tensor>&, Session& sess);
+	void Release(){} 
 public:
-	Constant(){}
-	Constant(T _value){
-		value = _value;
+	Constant(const Tensor& _t,const std::string& _nm=""):Node(_nm,new Tensor(_t)){}
+	std::string Expr()
+	{
+		return std::string("Constant(")+name+")";
 	}
-	virtual T eval(){
-		return value;
-	}
-	virtual ~Constant(){}
+	void grad(std::map<Node*, std::multiset<Node*>>& grads, Node& t) override;
+	void Rely(std::set<std::string>& lib){}
 };
+
+
+
+#endif
